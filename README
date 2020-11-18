@@ -1,4 +1,9 @@
-This script moves all files and directories from a shared directory to the 
-desktop, switches their ownership to the current user, removes files' execution
-permissions, and echos all names to the terminal.
+The setup is a Windows host and a Linux (Ubuntu in my case) guest installed on a VirtualBox virtual machine. Of course, sharing between the two systems is enabled.
 
+This shell script moves all files and directories from a shared directory called 'shared' to the Linux Home directory, switches their ownership to the current user, removes files' execution permissions, and echos all names to the terminal.
+
+The paths for the shared and destination directories are hardcoded; of course, you can easily change them to suit your needs. And if you want more flexibility, it shouldn't be hard to modify the script so that it accepts paths passed to it from the command line.  
+
+A couple of notes: 
+_If you're moving nested directories, keep in mind that the script removes the execution permissions of second-level directories. After the script runs, you should manually add their execution permissions and remove, if you wish, those of the files within. 
+_The script doesn't accept names that contain two or more consecutive spaces. 
