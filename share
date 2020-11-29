@@ -26,7 +26,20 @@ for filename in "${filenames[@]}"; do
  if [ -f "$DESTIN/$filename" ]; then
   chmod a-x "$DESTIN/$filename"
  elif [ -d "$DESTIN/$filename" ]; then
-  chmod a-x "$DESTIN/$filename"/*
+  lsnes=$(ls -RQ $DESTIN/$filename)
+  k=2
+  while true; do
+   finame=$(echo $lsnes | cut -d '"' -f $k)
+   if [ -z "$finame" ]; then
+    break
+   fi
+   if [ -d "$finame" ]; then
+    dirname=$finame
+   elif [ -f "$finame" ]; then
+    chmod a-x "$dirname/$finame"
+   fi
+   k=$((k+2))
+  done
  fi
  echo $filename
 done
