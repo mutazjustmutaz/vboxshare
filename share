@@ -3,7 +3,7 @@
 #This script moves all files and directories from a shared directory to Home, switches their ownership to the current user, removes files' execution permissions, and echos all names to the terminal.
 
 SHARED=/media/sf_shared/
-DESTIN=$HOME
+DESTIN=$HOME/Desktop
 lsres=$(sudo ls -Q $SHARED)
 
 #The purpose of this loop is to add support for file names with single spaces.
@@ -35,7 +35,7 @@ for filename in "${filenames[@]}"; do
    fi
    if [ -d "$finame" ]; then
     dirname=$finame
-   elif [ -f "$finame" ]; then
+   elif [ -f "$dirname/$finame" ]; then
     chmod a-x "$dirname/$finame"
    fi
    k=$((k+2))
