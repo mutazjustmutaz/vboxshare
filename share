@@ -10,7 +10,7 @@ lsres=$(sudo ls -Q $SHARED)
 i=2
 j=0
 while true; do 
- filename=$(echo $lsres | cut -d '"' -f $i)
+ filename=$(echo "$lsres" | cut -d '"' -f $i)
  if [ -z "$filename" ]; then
   break
  fi
@@ -21,15 +21,15 @@ done
 
 #This loop executes the file manipulation commands.
 for filename in "${filenames[@]}"; do
- sudo mv "$SHARED$filename" $DESTIN
- sudo chown -R $USER: "$DESTIN/$filename"
+ sudo mv "$SHARED$filename" "$DESTIN"
+ sudo chown -R "$USER": "$DESTIN/$filename"
  if [ -f "$DESTIN/$filename" ]; then
   chmod a-x "$DESTIN/$filename"
  elif [ -d "$DESTIN/$filename" ]; then
-  lsnes=$(ls -RQ $DESTIN/$filename)
+  lsnes=$(ls -RQ "$DESTIN"/"$filename")
   k=2
   while true; do
-   finame=$(echo $lsnes | cut -d '"' -f $k)
+   finame=$(echo "$lsnes" | cut -d '"' -f $k)
    if [ -z "$finame" ]; then
     break
    fi
@@ -41,5 +41,5 @@ for filename in "${filenames[@]}"; do
    k=$((k+2))
   done
  fi
- echo $filename
+ echo "$filename"
 done
