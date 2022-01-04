@@ -1,28 +1,15 @@
 #!/bin/bash
 
-#This script moves all files and directories from a shared directory to Home, switches their ownership to the current user, removes files' execution permissions, and echos all names to the terminal.
+#This script moves all files and directories from a shared directory to Home, switches their ownership to the current user group, removes files' execution permissions, and echos all top-level names to the terminal.
 
-SHARED=/media/sf_shared/
-DESTIN=$HOME/Desktop
-lsres=$(sudo ls -Q $SHARED)
+cd /media/sf_shared || exit
 
-#The purpose of this loop is to add support for file names with single spaces.
-i=2
-j=0
-while true; do 
- filename=$(echo $lsres | cut -d '"' -f $i)
- if [ -z "$filename" ]; then
-  break
- fi
- filenames[j]=$filename
- i=$((i+2))
- j=$((j+1))
-done
+DESTIN=$HOME
 
-#This loop executes the file manipulation commands.
-for filename in "${filenames[@]}"; do
- sudo mv "$SHARED$filename" "$DESTIN"
- sudo chown -R "$USER": "$DESTIN/$filename"
+for filename in *; do
+ [ -e "$filename" ] || continue
+ mv "$filename" "$DESTIN"
+ chown -R "$USER": "$DESTIN/$filename"
  if [ -f "$DESTIN/$filename" ]; then
   chmod a-x "$DESTIN/$filename"
  elif [ -d "$DESTIN/$filename" ]; then
