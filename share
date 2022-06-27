@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#This script moves all files and directories from a shared directory to Home, switches their ownership to the current user group, removes files' execution permissions, and echos all top-level names to the terminal.
+#This script moves all files and directories from a shared directory to Home, removes files' execution permissions recursively, and echos all top-level names to the terminal.
 
 cd /media/sf_shared || exit
 
@@ -9,7 +9,6 @@ DESTIN=$HOME
 for filename in *; do
  [ -e "$filename" ] || continue
  mv "$filename" "$DESTIN"
- chown -R "$USER": "$DESTIN/$filename"
  if [ -f "$DESTIN/$filename" ]; then
   chmod a-x "$DESTIN/$filename"
  elif [ -d "$DESTIN/$filename" ]; then
